@@ -1,0 +1,29 @@
+.port .panel-default .dataTables_wrapper .dataTables_paginate {
+    /* float: right; */
+    float: none;
+    display: flex;
+    justify-content: center;
+    text-align: right;
+    margin:10px;
+    padding-top: 0.25em;
+}
+
+
+/* .port .panel-default  .dataTables_paginate  .paginate_button{
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.port .panel-default  .dataTables_paginate .current{
+    color: #fff;
+    cursor: default;
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+
+.port .panel-default  .dataTables_paginate .disabled{
+    border: 1px solid #ddd;
+} */

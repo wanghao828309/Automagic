@@ -1,0 +1,311 @@
+{% load staticfiles %}
+<html lang="en">
+<head>
+<title>API详情</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="bookmark" href="/favicon.ico">
+<!-- <link rel="apple-touch-icon" href="http://cdn.atool.org/res/touch-icon-iphone.png"> -->
+ <link href="{% static 'css/api.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/toastr.min.css' %}" rel="stylesheet" type="text/css">
+<!-- <link rel="stylesheet" href="http://cdn.atool.org/res/style.new.css"> -->
+<style type="text/css">
+		thead {background-color: #f3f3f3;}
+		.params_value, .headers_value {width: 75%}
+		button.tiny{padding: 2px 2px;margin-bottom:5px;}
+		.content-table td{word-wrap:break-word;white-space:pre-wrap;word-break: break-all;padding:3px 10px;}
+		.content-table tr {line-height: 17px;}
+</style>
+<!-- <link href="http://cdn.atool.org/res/JSONFormatter.css" rel="stylesheet"> -->
+<!-- <link rel="stylesheet" type="text/css" href="http://cdn.atool.org/res/dialogbox/jquery.dialogbox.css"> -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/toastr.min.js' %}"></script>
+<script src="{% static 'js/js_beauty.js' %}"></script>
+<script src="{% static 'js/apiCommon.js' %}"></script>
+
+</head>
+<body>
+<div style="width:1500px; height:500px;">
+	<label type="hidden" id="csrf_token" >{% csrf_token %}</label>
+    <form style="padding:0 20px;">
+				 <div class="row">
+            <select id="api-selproductid" name="productname" class="select" style="width: auto;">
+              <option value="0">所属产品</option>
+            </select>
+            <select id="selapiproductid" name="productname" class="select" style="width: auto;">
+              <option value="">所属项目</option>
+            </select>
+            <select id="selapimoduleid" name="moduleid" class="select" style="width: auto;">
+              <option value="">所属模块</option>
+            </select>
+            <select id="apiEnv" name="envid" class="select">
+              <option value="">选择试运行环境</option>
+            </select>
+				 </div>
+				<div class="row" id="params_start">
+					<div class="one xs-four">
+						<input type="text" class="input-text strong" id="apiInfoname" title="HTTP接口名称" alt="HTTP接口名称"  value="" placeholder="接口名称" style="width: 500px;">
+
+		          	</div>
+					<div class="span five xs-six strong" style="margin-top: 8px;margin-bottom: 8px;width: auto;">
+						<select id="api_method" class="select" style="width: 90px;float: left;margin-left: 0px;">
+							<option value="GET">GET</option>
+							<option value="POST" selected="">POST</option>
+							<!--<option value="PUT">PUT</option>-->
+							<!--<option value="PATCH">PATCH</option>-->
+							<!--<option value="DELETE">DELETE</option>-->
+							<!--<option value="COPY">COPY</option>-->
+							<!--<option value="HEAD">HEAD</option>-->
+							<!--<option value="OPTIONS">OPTIONS</option>-->
+							<!--<option value="LINK">LINK</option>-->
+							<!--<option value="UNLINK">UNLINK</option>-->
+							<!--<option value="PURGE">PURGE</option>-->
+						</select>
+						<input type="text" class="input-text" id="http_url_input" title="HTTP接口URL" alt="HTTP接口URL" value="" placeholder="http://" style="float: left;width: 750px;">
+						<button class="button success else-btn" id="http_test" type="button" style="float: left;width: auto;margin-left: 8px;">发送请求</button>
+						<button class="button danger else-btn" id="copy_btn" type="button" style="float: left;width: auto;margin-left: 8px;" onclick="saveApi()">保存</button>
+						<span class="contenttype" id="contentType">
+							<label class="contentlabel"><input type="checkbox" value="none">none</label>
+							<label class="contentlabel"><input type="checkbox" value="form-data">form-data</label>
+							<label class="contentlabel"><input type="checkbox" value="x-www-form-urlencoded">x-www-form-urlencoded</label>
+							<label class="contentlabel"><input type="checkbox" value="raw">raw</label>
+							<label class="contentlabel"><input type="checkbox" value="binary">binary</label>
+						</span>
+					</div>
+
+				<table id="params_table" class="table table-bordered">
+					<thead>
+				        <tr>
+							<th width="35%">Body参数名称</th>
+							<!-- <th width="10%">Body参数类型</th> -->
+				            <th>Body参数值</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				    		<tr class="params_p" cnt="1">
+								<td>
+									<input class="params_name input-text" type="text" name="p_name_1" title="参数名称" alt="参数名称" value="" maxlength="100">
+								</td>
+								<!-- <td>
+									<select  class="select params_type" style="width: 120px;float: left;margin-left: 0px;">									
+										<option value="string" selected="">string</option>
+										<option value="int" >int</option>
+										<option value="float">float</option>
+										<option value="double">double</option>
+										<option value="boolean">boolean</option>
+									</select>
+								</td> -->
+								<td>
+									<input class="params_value input-text" type="text" name="p_value_1" title="参数数值" alt="参数数值" value="" maxlength="5000">									
+									<button class="button danger tiny else-btn" onclick="javascript:del_param(this);" type="button" style="display:none;">删除参数</button>
+								</td>
+							</tr>
+						
+
+				    </tbody>
+				</table>
+				<div id="params_json" class="independSection" style="display:none">
+					<textarea id="param_json_val"></textarea>
+				</div>
+				<div id="params_file" class="independSection" style="display: none">
+					<input type="file"  >
+				</div>
+				<div id="controlltable">
+				    	<button class="button primary small" id="add_url_parameter" type="button" onclick="add_param()">添加参数</button>
+				    	<!--<button class="button success small" id="add_raw_url_parameter" type="button">RAW批量添加</button>-->
+				</div>
+				<table id="headers_table" class="table table-bordered">
+					<thead>
+				        <tr>
+				            <th width="35%">Header名称</th>
+				            <th>Header值</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+
+				    </tbody>
+				</table>
+					<div id="control_headertable">
+				    	<button class="button primary small" id="add_api_headers" type="button" onclick="add_header()">添加Header</button>
+					</div>
+					<table id="response_table" class="table table-bordered">
+							<thead>
+								<tr>
+									<th width="35%">Response Header</th>
+									<th>Response Body</th>
+								</tr>
+								
+							</thead>
+							<tbody>
+								<tr>
+									<td valign="top" id="response_header" style="display:block;word-break: break-all;word-wrap: break-word;">
+											<textarea class="res-div" id="resheaders"></textarea>
+									</td>
+									<td valign="top">
+										<textarea class="res-div" id="output"></textarea>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+		
+			</form>
+    </div>
+</body>
+<script src="{% static 'js/apiTest.js' %}"></script>
+<script type="text/javascript">
+
+ 
+   function saveApi(){
+   		if(!validateAPI()){
+   		    return false;
+   		}
+   		var name={};
+   		var request={};
+   		var headers={};
+   		var request_data={};
+   		var req={};
+   		var test=[];
+   		
+   		name.index="";
+
+        name.author="wanghao";
+   		name.name=$("#apiInfoname").val();
+   		name.project=$("#selapiproductid").find("option:selected").text();
+   		name.module=$("#selapimoduleid").find("option:selected").text();
+
+		var type=$("#contentType").find('input[type=checkbox]:checked').val();  
+		if(type == "raw"){
+			cType="application/json;charset=utf-8;"
+		}
+		if(type =="x-www-form-urlencoded" | type =="form-data" ) {
+			cType="application/"+type+";charset=utf-8;"
+		}
+		test.push({"key":"Content-Type","value":cType});
+
+   		$('#headers_table').find('tbody tr').each(function(i){
+   			key=$(this).children().children(".params_name").val();
+   			value=$(this).children().children(".params_value").val();
+   			if(key!= "" & value != ""){
+      			test.push({"key":key,"value":value});
+      		}
+   		});
+		headers.test=test;
+
+		test=[];//清空test给body参数用
+		if(type =="x-www-form-urlencoded" | type =="form-data" ) {
+			$('#params_table').find('tbody tr').each(function(i){
+
+				key=$(this).children().children(".params_name").val();
+   				value=$(this).children().children(".params_value").val();
+   				if(key!= "" & value != ""){
+					test.push({"key":key,"value":value});
+      			}
+			   });
+			type="data";//置为data
+			request_data.test=test;
+   		}
+		
+		if (type == "raw"){
+			type="json";//置为json
+			request_data=$("#param_json_val").val().replace(/[\r\n]/g,"");
+		}
+
+		if(type == "binary"){
+			return false;//file类型暂时不支持
+		}
+
+      	request.url=$("#http_url_input").val();
+      	request.method=$("#api_method").val();
+      	request.headers=headers;
+      	request.type=type;
+      	request.request_data=request_data;
+      	req.name=name;
+      	req.request=request;
+      	request=JSON.stringify(req);
+		console.log(req);
+
+		$.ajax({
+            type: "POST",
+            data: request,
+            url: "/api/webinterface/api/add",
+            cache: false,
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            success: function (result, TextStatus) {
+            	if(result.success){
+            	    toastr.success(result.msg);
+            	}else{
+            	    toastr.error(result.msg);
+            	}
+
+        	},
+        	error : function(msg) {
+					toastr.error(result.msg);
+			}
+    })
+
+   }
+
+
+
+
+$(document).ready(function (){
+
+
+
+  $('#contentType').find('input[type=checkbox]').bind('click', function(){  
+          var id = $(this).attr("id");
+        
+        //当前的checkbox是否选中
+        if(this.checked){
+            //除当前的checkbox其他的都不选中
+            $("#contentType").find('input[type=checkbox]').not(this).attr("checked", false);
+			var typeVal=$(this).val();
+	
+			if(typeVal == "form-data" | typeVal == "x-www-form-urlencoded"  ){
+				$("#params_table").show();
+				$("#add_url_parameter").show();
+				$("#params_json").hide();
+				$("#params_file").hide();
+			}
+
+			if(typeVal == "raw"  ){
+				$("#params_table").hide();
+				$("#add_url_parameter").hide();
+				$("#params_json").show();
+				$("#params_file").hide();
+			}
+
+			if(typeVal == "binary"  ){
+				$("#params_table").hide();
+				$("#add_url_parameter").hide();
+				$("#params_json").hide();
+				$("#params_file").show();
+			}
+          
+        }else{
+        }
+    });
+
+
+
+
+
+
+    $('body').on('mouseenter' , 'tr' , function() {
+    	var delBtn=$(this).children().children(".tiny");
+    	delBtn.show();
+	})
+
+	 $('body').on('mouseleave' , 'tr' , function() {
+    	var delBtn=$(this).children().children(".tiny");
+    	delBtn.hide();
+	})
+
+}) 
+</script>
+</html>

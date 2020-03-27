@@ -1,0 +1,74 @@
+{% extends 'frame.html' %}
+{% block title %}Automagic{% endblock %}
+{% block leftshow2 %}
+    <dl class="setting">
+        <dt>系统管理<img src=""></dt>
+        <dd ><a href="{% url 'userlist' %}">用户管理</a></dd>
+        <dd class="first_dd"><a href="{% url 'productlist' %}">产品管理</a></dd>
+    </dl>
+{% endblock %}
+{% block slideshow %}
+    {% if request.user.is_admin %}
+        <!--===================================================main start==================================================================-->
+        <div class="ak-zper-midbox ak-jsch-mid">
+            <div class="ak-zper-inbox-title ak-jsch-title clearfix">
+                <div class="ak-left ak-jsch-row3 ak-zper-fix-btnbox">
+                    <span class="ak-zper-remindback"></span>
+                    <span class="inbox-text">产品管理</span>
+                </div>
+                <div id="log_info" class="ac-addtips"></div>
+            </div>
+
+            <!--      ---------------------华丽的分割线 main------------------------ -->
+               <iframe id='right_content' src="{% url 'productframe' %}" width="100%"  allowtransparency="true" height="900px">
+        </div>
+        <!--      ---------------------华丽的分割线 main end------------------------ -->
+        <!--===================================================main end==================================================================-->
+
+
+    {% else %}
+        <div class="ak-zper-midbox ak-jsch-mid">
+            <div class="ak-zper-inbox-title ak-jsch-title clearfix">
+                <div class="ak-left ak-jsch-row3 ak-zper-fix-btnbox">
+                    <span class="ak-zper-remindback"></span>
+                    <span class="inbox-text">产品管理</span>
+                </div>
+                <div id="log_info" class="ac-addtips"></div>
+            </div>
+            <div class="col-md-12">
+                <div style="text-align: center">
+                    <p>形成天才的决定因素应该是勤奋。</p>
+                    <p>……有几分勤学苦练是成正比例的。</p>
+                    <p>加油吧！少年！！！</p>
+                    <p>你没权限访问，可以找找管理员。</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block script %}
+    <script>
+        function btn_skip_click() {
+            var currpage = $('#curpage').val() === '' ? 1 : parseInt($('#curpage').val());
+            // console.log(currpage);
+            if (currpage > {{ page_obj.paginator.num_pages }}) {
+                currpage = {{ page_obj.paginator.num_pages }};
+            }
+            if (currpage < 1) {
+                currpage = 1;
+            }
+            var url = window.location.search.match(/page=(\d+|\s*)/) === null ? window.location.origin + (window.location.pathname + '?page=' + currpage + (window.location.search ? window.location.search.replace('?', '&') : '')) : window.location.search.replace(/page=(\d+|\s*)/, 'page=' + currpage);
+            self.location = url;
+
+            return false;
+        }
+
+        $('#curpage').keypress(function (event) {
+            console.log(event.which);
+            if (event.which == 13) {
+                btn_skip_click()
+            }
+            event.stopPropagation();
+        })
+    </script>
+{% endblock %}

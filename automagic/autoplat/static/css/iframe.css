@@ -1,0 +1,51 @@
+.iframe-dialog{
+    /* position: relative; */
+    /* float: right; */
+    margin-left: auto;
+    margin-top: -57;
+    background-image:none;
+}
+.user-base-info {
+    position: absolute;
+    top: 70px;
+    right: 10px;
+    width: 120px;
+}
+
+.user-base-info  ul {
+   line-height: 25px;
+}
+
+.user-bar-single  > a:focus {
+    background-color:transparent;
+}
+
+
+.header-ui-item {
+    margin: 5px 0;
+    background-color: #fff;
+    border: 1px solid #e6ebf5;
+    border-radius: 4px;
+    line-height: 25px;
+    display:block;
+    color: black;
+    text-align: left;
+    padding: 8px 5px !important;
+}
+
+.header-ui-item:hover{
+    background-color:#d8d8d8;
+}
+
+.product-label{
+    font-size:15;
+    min-width: 100px;
+    font-weight: 400;
+    min-width: 300px;
+    max-width: 500px;
+    padding: 10;
+    margin: 10;
+}
+
+
+

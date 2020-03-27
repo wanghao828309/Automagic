@@ -1,0 +1,258 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <title>Automagic</title>
+    <link href="{% static 'css/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/ak-base-style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/jquery.dataTables.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/master-page-v3/ak-master-page-v3style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/master-page-v3/ak-master-page-v3.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/bootstrapValidator.css' %}" rel="stylesheet" type="text/css">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
+    <link href="{% static 'css/ak-schedule.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/wheelmenu.css' %}"/>
+    <style>
+    .leftsidebar_box dd a:hover,.leftsidebar_box dd.first_dd a{background-color:#d8d8d8;}
+    .interfacetest dd a:hover,.interfacetest dd.first_dd a{background-color:#d8d8d8;}
+
+    </style>
+    <link href="{% static 'css/iframe.css' %}" rel="stylesheet" type="text/css">
+</head>
+
+
+<body>
+
+<div class="placeholder-top">
+
+    <ul id="gn-menu" class="navbar gn-menu-main">
+
+
+        <li class="container-fluid pull-right">
+            <ul class=" bar-right right-menu">
+
+                <li class=" dropdown notifications ak-zuser-dropdowndiv" data-href="view-userinfo">
+                    <a class="user-bar-single" href="javascript:;" class="" data-toggle="dropdown"
+                       aria-expanded="true" style="background-color: transparent;"> <img
+                            src="{% static 'images/user-13.jpg' %}" class="ak-zuser-aimg" alt="">
+                        <!--<span>{{ request.user.realname }}</span>-->
+                    </a>
+
+
+                    <div class="user-info-bar">
+                        <div class="user-base-info">
+                            <!--<span class="header-ui-item">{{ request.user.realname }}</span>-->
+                            <!--<span class="header-ui-item">{{ request.user.email }}</span>-->
+                            <!--{% if request.user.mobile %}-->
+                            <!--<span class="header-ui-item">{{ request.user.mobile }}</span>-->
+                            <!--{% endif %}-->
+                            <a class="header-ui-item" href="/logout" rel="nofollow">
+                                退出登录
+                            </a>
+                        </div>
+                    </div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<!--========left start======-->
+<div class="ak-zper-leftbox ak-jsch-border">
+
+    <div class="ak-zexam-leftmenu clearfix">
+        <!--第一个ul start-->
+        <div class="leftsidebar_box">
+            <div class="line"></div>
+
+            {% block leftshow %}
+            <dl class="functiontest" id="funcTestMenu">
+                <dt onclick="menuClick()">功能测试<img src="{% static 'images/select_xl01.png' % }"></dt>
+                <dd><a class="menu_link" href="{% url 'caselist' %}">用例管理</a></dd>
+                <dd><a class="menu_link" href="{% url 'tasklist' %}">任务管理</a></dd>
+                <dd><a class="menu_link" href="{% url 'elementlist' %}">元素管理</a></dd>
+                <dd><a class="menu_link" href="{% url 'keywordlist' %}">关键字管理</a></dd>
+            </dl>
+            {% endblock %}
+
+            {% block leftshowinterface %}
+            <dl class="interfacetest" id="apiTestMenu">
+                <dt onclick="menuClick()">接口测试<img src="{% static 'images/select_xl01.png' % }"></dt>
+                <dd><a class="menu_link" href="{% url 'api:debugtalklist' %}">自定义方法</a></dd>
+                <dd><a class="menu_link" href="{% url 'apilist' %}">接口管理</a></dd>
+                <dd><a class="menu_link" href="{% url 'apicaselist' %}">用例管理</a></dd>
+                <dd><a class="menu_link" href="{% url 'apisuitelist' %}">SUITE管理</a></dd>
+                <dd><a class="menu_link" href="{% url 'hostlist' %}">HOST管理</a></dd>
+                <!-- <dd><a href="{% url 'apitasklist' %}">任务管理</a></dd> -->
+            </dl>
+            {% endblock %}
+
+            {% block leftshow2 %}
+            <dl class="setting" id="settingMenu">
+                <dt onclick="menuClick()">系统管理<img src="{% static 'images/select_xl01.png' %}"></dt>
+                <dd><a class="menu_link" href="{% url 'userlist' %}">用户管理</a></dd>
+                <dd><a class="menu_link" href="{% url 'productlist' %}">产品管理</a></dd>
+            </dl>
+            {% endblock %}
+            <div>
+                <a href="#wheel2" class="wheel-button ne">
+                    <span>+</span>
+                </a>
+                <ul id="wheel2" data-angle="NE" class="wheel">
+                    <li class="item"><a href="http://confluence.wondershare.cn/" target="_blank"
+                                        title="confluence">C</a></li>
+                    <li class="item"><a href="http://testrail.wondershare.cn:8888/" target="_blank"
+                                        title="testrail">T</a></li>
+                    <li class="item"><a href="http://jira7.wondershare.cn" target="_blank" title="jira">J</a></li>
+                    <li class="item"><a href="http://testgit.wondershare.cn/VsTestTeam/filmora9.0_AutoMagic"
+                                        target="_blank" title="git">G</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--第一个ul end-->
+    </div>
+</div>
+<!--mid menu end-->
+<!--=======left end=======-->
+<!--===================================================main start==================================================================-->
+{% block content %}
+
+<div>
+    {% block slideshow %}{% endblock %}
+    {% block page_content %}{% endblock %}
+    <div class="ak-clear"></div>
+    <footer style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+        <p>适用浏览器：Chrome</p>
+    </footer>
+</div>
+
+{% endblock %}
+<!--===================================================main end==================================================================-->
+<!-- <iframe name="right" id="rightMain" src="" frameborder="0" scrolling="auto" width="100%" height="auto" allowtransparency="true">
+</iframe> -->
+</body>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<!--<script src="{% static 'js/bootstrap.min.js' %}"></script>-->
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+
+<link rel="stylesheet" href='{% static "zTree_v3/css/zTreeStyle/zTreeStyle.css" %}' type="text/css">
+<script type="text/javascript" src='{% static "zTree_v3/js/jquery.ztree.core.js" %}'></script>
+<script type="text/javascript" src='{% static "zTree_v3/js/jquery.ztree.excheck.js" %}'></script>
+<script type="text/javascript" src='{% static "zTree_v3/js/jquery.ztree.exedit.js" %}'></script>
+
+<script src="{% static 'js/bootstrapValidator.js' %}"></script>
+
+
+<!--Custom Scripts-->
+<script src="{% static 'js/common.js' %}"></script>
+<script src="{% static 'js/automagic.js' %}"></script>
+
+
+<!--public js-->
+<script type="text/javascript" src="{% static 'js/back-to-top.js' %}"></script>
+<!--[if lt IE 9]>
+<script src="{% static 'js/html5shiv/html5shiv.min.js' %}"></script>
+<script src="{% static 'js/respondjs/respond.min.js' %}"></script>
+<![endif]-->
+
+
+<script src="{% static 'js/jquery.wheelmenu.js' %}"></script>
+<script src="{% static 'muti_select/src/MultiSelectDropList.js' %}"></script>
+<link href="{% static 'muti_select/css/multi.css' %}" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+    $(".leftsidebar_box dt").css({"background-color": "#fafafa"});
+    $(".leftsidebar_box dt img").attr("src", "{% static 'images/select_xl01.png' %}");
+    $(function () {
+        //注释掉：yansl@wondershare.cn
+        //这里默认都展开，免得菜单加载跳来跳去，我们现在菜单不多，这个默认收起的，没有必要
+        //$(".leftsidebar_box dd").hide();
+        $(".leftsidebar_box dt").click(function () {
+            $(".leftsidebar_box dt").css({"background-color": "#fafafa"})
+            $(this).css({"background-color": "#fafafa", "margin-bottom": "1px"});
+            $(this).parent().find('dd').removeClass("menu_chioce");
+            $(".leftsidebar_box dt img").attr("src", "{% static 'images/select_xl01.png' %}");
+            $(this).parent().find('img').attr("src", "{% static 'images/select_xl.png' %}");
+            $(this).parent().find('dd').addClass("menu_chioce");
+            //add by yansl
+            if($(this).parent().find('dd').is(":hidden")){
+                $(this).parent().find('dd').show();
+            }else{
+                $(this).parent().find('dd').hide();     //如果元素为显现,则将其隐藏
+            }
+        });
+    })
+
+</script>
+<script>
+    var elementTags = []
+    $(document).ready(function () {
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+        });
+/*
+        if (window.location.pathname === '/') {
+            $('.functiontest dt').click();
+        }
+        if (window.location.pathname.indexOf('func') > 0) {
+            $('.functiontest dt').click();
+        }
+        if (window.location.pathname.indexOf('interf') > 0) {
+            $('.interfacetest dt').click();
+        }
+        if (window.location.pathname.indexOf('tools') > 0) {
+            $('.tools dt').click();
+        }
+        if (window.location.pathname.indexOf('setting') > 0) {
+            $('.setting dt').click();
+        }
+        */
+        $(".wheel-button").wheelmenu({
+            trigger: "hover",
+            animation: "fly",
+            animationSpeed: "fast"
+        });
+        $('#mytable').DataTable({
+            "bPaginate": false,  //是否显示分页
+            "bLengthChange": false,  //每页显示的记录数
+            "bFilter": false, //搜索栏
+            "bSort": true, //是否支持排序功能
+            "bInfo": false, //显示表格信息
+            "bAutoWidth": true,  //自适应宽度
+            "aaSorting": [[0, "desc"]],  //给列表排序 ，第一个参数表示数组 (由0开始)。1 表示Browser列。第二个参数为 desc或是asc
+            "oLanguage": {
+                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                "sZeroRecords": "对不起，查询不到任何相关数据",
+                "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+                "sInfoEmtpy": "找不到相关数据",
+                "sInfoFiltered": "数据表中共为 _MAX_ 条记录)",
+                "sProcessing": "正在加载中...",
+                "sSearch": "搜索",
+                "sUrl": "", //多语言配置文件，可将oLanguage的设置放在一个txt文件中，例：Javascript/datatable/dtCH.txt
+                "oPaginate": {
+                    "sFirst": "第一页",
+                    "sPrevious": " 上一页 ",
+                    "sNext": " 下一页 ",
+                    "sLast": " 最后一页 "
+                }
+            }, //多语言配置
+        });
+
+    });
+
+</script>
+
+
+</html>

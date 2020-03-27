@@ -1,0 +1,38 @@
+{% extends 'frame.html' %}
+{% block title %}Automagic{% endblock %}
+{% block leftshow %}
+        <dl class="functiontest" id="menu">
+                <dt>功能测试<img src=""></dt>
+                <dd class="first_dd"><a href="{% url 'caselist' %}">用例管理</a></dd>
+                <dd ><a href="{% url 'tasklist' %}" >任务管理</a></dd>
+                <dd ><a href="{% url 'elementlist' %}" >元素管理</a></dd>
+                <dd><a href="{% url 'keywordlist' %}">关键字管理</a></dd>
+            </dl>
+{% endblock %}
+{% block slideshow %}
+    <div class="ak-zper-midbox ak-jsch-mid">
+         <div class="ak-zper-inbox-title ak-jsch-title clearfix">
+               <div class="ak-left ak-jsch-row3 ak-zper-fix-btnbox">
+                    <span class="ak-zper-remindback"></span>
+                    <span class="inbox-text">用例管理</span>
+               </div>
+
+                <select id="selproductid" name="productname" class="ak-right ak-left ac-aselect ac-margint8">
+                      <option value="0">-请选择产品-</option>
+                          {% for product in userandproduct  %}
+                              {% if product.username == request.user %}
+                                  <option value="{{ product.productname.id }}" {% if request.GET.check_productname  == product.productname.id %}selected{% endif %}>{{ product.productname }}</option>
+                              {% endif %}
+                          {% endfor %}
+                </select>
+          </div>
+
+<!--      ---------------------华丽的分割线 main------------------------ -->
+        <iframe id='right_content' src="{% url 'caseframe' %}" width="100%"  allowtransparency="true" height="900px">
+        </iframe>
+    <!--      ---------------------华丽的分割线 main end------------------------ -->
+
+    </div>
+
+
+{% endblock %}

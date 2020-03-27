@@ -1,0 +1,13 @@
+*.pyc
+*.idea
+*.xml
+*.iml
+/automagic/.idea/
+/automagic/autoplat/migrations/
+/automagic/webinterface/migrations/
+/automagic/suite/
+/automagic/log/
+/automagic/reports/
+/automagic/uploadFile/
+/automagic/keyword/result/20*
+/.idea/

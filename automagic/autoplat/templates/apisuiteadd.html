@@ -1,0 +1,136 @@
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>添加case</title>	
+    
+    <link href="{% static 'css/transfer-bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/transfer.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/toastr.min.js' %}"></script>
+    <script src="{% static 'js/jquery.transfersuite.js' %}"></script>    
+    <script src="{% static 'js/SortableJS.js' %}"></script>
+    <script src="{% static 'js/jquery-sortable.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/ApiSuiteCommon.js' %}"></script>
+   
+    
+  
+  </head>
+
+  <body>
+
+	
+    <div style="margin-left: 80px;margin-top: 20px;">
+                <select id="api-selproductid" name="productname" class="select" style="width: auto;height: auto;">
+                  <option value="0">所属产品</option>
+                </select>
+                <select id="selapiproductid" name="productname" class="select" style="width: auto;height: auto;">
+                    <option value="">所属项目</option>
+                    <!-- <option value="">filmstocks</option>
+                    <option value="">effects</option>
+                    <option value="">good service</option>
+                    <option value="">user 服务</option> -->
+                 </select>
+    </div>   
+    <div style="clear:both">
+            <input type="text" id="case_name" class="input-inner transfer-input-name" placeholder="suite名称">
+            <button id="case_save" class="btn btn-sm btn-primary transfer-btn-save">保存</button> 
+    </div>
+
+  
+
+        <h5 class="page-header"></h5>
+
+        <div style="margin-left: 80px;margin-top: 20px;">
+                <select id="apicaseproductid" name="productname" class="select" style="width: auto;height: auto;">
+                    <option value="">所属项目</option>
+                    <!-- <option value="">filmstocks</option>
+                    <option value="">effects</option>
+                    <option value="">good service</option>
+                    <option value="">user 服务</option> -->
+                 </select>
+                 <select id="apicasemoduleid" name="moduleid" class="select" style="width: auto;height: auto;">
+                     <option value="">所属模块</option>
+                     <!-- <option value="">订单模块</option>
+                     <option value="">登录模块</option>
+                     <option value="">权益模块</option>
+                     <option value="">查询接口</option> -->
+                </select>
+                <input type="text" id="apisearchstr" class="input-inner " placeholder="输入名称/url查询" style="margin-left: 10;height: 30px;width: 430px;">
+                <button class="btn btn-sm btn-primary transfer-btn-save" id="getApis" style="margin-top: -10;" onclick="serachAPI()">查询CASE</button>
+               
+        </div>
+        
+    <div id="test">
+        <select id="source" multiple="multiple">
+            <option value="1">filmstocks登录接口</option>
+            <!-- <option value="2" >获取订阅权益</option>
+            <option value="3" >购买saas资源</option>
+            <option value="4" >收藏saas资源</option>
+            <option value="5" >下载saas资源</option>
+            <option value="6" >查询用户下载记录</option> -->
+        </select>
+        <select id="target" multiple="multiple">
+
+        </select>
+    </div>
+
+    <script src="{% static 'js/apiSUITE.js' %}"></script>
+ 
+    <script>
+		$(function() {
+            $('#test').transfer({
+                source:'#source',
+                target:'#target'
+            });
+		});
+    </script>
+    <script>        
+        $(document).ready(function (){
+            $('.transfer-panel-list').sortable();
+            $('.transfer-panel-list').sortable({
+	
+	            handle: '.handle',
+	            invertSwap: true,
+	
+            })
+        });
+    </script>
+    <script>
+   
+
+    $(document).ready(function (){
+     
+        //关闭model的时候，去掉block，不然会挡住操作
+        $('#apicaseModal').on('hidden.bs.modal', function (e) {           
+            $(this).attr("style","display:none");
+        })
+
+        serachAPI();//页面加载，默认所有接口都弄出来
+
+        $("#case_save").on("click",function(){
+            validate();
+            saveSuiteToDb("new");
+
+        $('body').on('mouseenter' , 'tr' , function() {
+     	    var delBtn=$(this).children().children(".tiny");
+    	    delBtn.show();
+	    })
+
+	    $('body').on('mouseleave' , 'tr' , function() {
+    	    var delBtn=$(this).children().children(".tiny");
+    	    delBtn.hide();
+        })
+    })
+   }
+  )
+    </script>
+  </body>
+</html>
+
+
+
+

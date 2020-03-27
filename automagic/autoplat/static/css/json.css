@@ -1,0 +1,115 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	margin: 0;
+	font-family: monospace;
+	white-space: normal !important;
+}
+
+
+.property{
+	font-weight: bold;
+}
+
+.distance{
+	margin-left: 2em !important;
+	position: relative;
+}
+
+.Fstring{
+	color: green;
+}
+
+.Fnumber{
+	color: #AA00AA;
+}
+
+.Fnull {
+	color: #0000FF;
+}
+
+.Fboolean {
+	color: #0000FF;
+}
+
+
+.Fobject{
+	margin-left: 0;
+}
+
+.collapser{
+	position: absolute;
+	left: -15px;
+	top: 2px;
+	cursor: pointer;
+	width: 15px;
+	text-align: center;
+	color: red;
+}
+
+
+.hover{
+	background: rgba(235, 238, 249, 1);
+}
+
+.J-hover {
+	-webkit-transition: background 0.1s linear;
+	padding: 1px 3px;
+	border-radius: 2px;
+}
+
+
+/* showImg 样式  */
+.showImg{
+	padding:5px;
+	border-radius: 3px;
+	box-shadow: 0 0 3px;
+	position: absolute;
+	left: 100px;
+	top:100px;
+	font-size: 0;
+}
+
+.showImg img{
+	max-width: 300px;
+	border:solid 1px #ccc;
+}
+
+
+.json_show_item{
+	padding: 3px;
+	border: solid 1px #ccc;
+	border-radius: 3px;
+	background: #fff;
+}
+
+.json_show_item img{
+	max-width: 300px;
+}
+
+body>div>.collapser{
+	display: none;
+}
+
+body>.distance{
+	margin-left: 5px !important;
+}
+
+.commentContainer{
+	position: absolute;
+	top: 0;
+	right: 0;
+	line-height: 20px;
+	padding: 3px;
+}
+
+.commentContainer .comment{
+	color: #8a8a8a;
+	font-size: 16px;
+}
+
+
+#initMsg{
+	display: none;
+}

@@ -1,0 +1,296 @@
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <title>Automagic</title>
+    <!--public css-->
+    <link href="{% static 'css/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/ak-base-style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/jquery.dataTables.min.css' %}" rel="stylesheet" type="text/css">
+     <link href="{% static 'css/api.css' %}" rel="stylesheet" type="text/css">
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">-->
+    <!--<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" type="text/css">-->
+    <!--master page v3 css-->
+    <link href="{% static 'css/master-page-v3/ak-master-page-v3style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/master-page-v3/ak-master-page-v3.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/bootstrapValidator.css' %}" rel="stylesheet" type="text/css">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
+    <!--customer css-->
+    {#         <link href="{% static 'css/master-page-v3/ak-nav-chat.css' %}" rel="stylesheet" type="text/css">#}
+    <link href="{% static 'css/ak-schedule.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/wheelmenu.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/port.css' %}"/>
+
+    <style>
+    .leftsidebar_box dd a:hover,.leftsidebar_box dd.first_dd a{background-color:#d8d8d8;}
+    </style>
+</head>
+<body  class="port">
+ <input type="input" hidden="true" id="apicase_id">
+ <input type="input" hidden="true" id="apicase_author">
+<div class="col-md-12" style="margin-top: -70;">
+              <div class="ac-margin-tb15" >
+
+                      <div class="panel panel-default">
+
+                          <div class="panel-heading">
+
+                              <select id="api-selproductid" name="productname" class="ak-left ac-aselect col03">
+                                <option value="0">所属产品</option>
+                              </select>
+                              <select id="selapiproductid" name="productname" class="ak-left ac-aselect col01 ">
+                                <option value="">所属项目</option>
+                              </select>
+                              <select id="selapimoduleid" name="moduleid" class="ak-left ac-aselect col02">
+                                <option value="">所属模块</option>
+                              </select>
+                             
+
+                              <div class="input-group">
+                                  <input type="input" class="form-control search-width" id="apicasename"   placeholder="CASE名称" >                                 
+                                  <button class="btn btn-primary"  id="apisearch_btn" onclick="dataSearch()" style="margin-left: 10px;">Go!</button>
+                                  <a href="#" onclick="batchRun()" class="ak-right ac-btn-adduser blue" data-toggle="modal" data-target="#envModal"  style="margin-left: 10px;padding-top: 6px;padding-bottom: 8px;">批量运行</a>
+                                  <a href="/apicase/add/" class="ak-right ac-btn-adduser blue" style="margin-left: 10px;padding-top: 6px;padding-bottom: 8px;">添加CASE</a>
+                              </div>
+                  <!-- /input-group -->
+                        </div>
+                            <table id="apicasetable" class="table  display the-port-table">
+                            </table>
+                    </div>
+              </div>
+          </div>
+    <div class="modal fade" id="envModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">选择运行环境</h4>
+            </div>
+            <div class="modal-body modal-main">
+
+                 <label class="ak-left modal-label env-label">环境:</label>
+                <select id="apiEnv" name="moduleid" class="ak-left ac-aselect modal-select" >
+                        <option value="">运行环境</option>
+                 </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="modal_cancel" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="goApiCASE()">运行</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+  <div class="modal fade ak-min-fullwidth-modal ak-znews-addsort-modal" id="debuginfo" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                  <div class="modal-content">
+                        <div class="modal-header clearfix">
+                              <button type="button" class="close close-back" data-dismiss="modal"> <span class="sr-only">Close</span> </button>
+                              <h4 class="modal-title text-center">调试信息</h4>
+                        </div>
+                        <div class="modal-body ak-main-body">
+                            <pre id="divdebuginfo">
+                            </pre>
+              </div>
+          </div>
+    </div>
+    </div>
+
+</body>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/toastr.min.js' %}"></script>
+
+<!--<link rel="stylesheet" href='{% static "zTree_v3/css/zTreeStyle/zTreeStyle.css" %}' type="text/css">-->
+{#        <script type="text/javascript" src='{% static "zTree_v3/js/jquery-1.4.4.min.js" %}'></script>#}
+<script type="text/javascript" src='{% static "zTree_v3/js/jquery.ztree.core.js" %}'></script>
+<script type="text/javascript" src='{% static "zTree_v3/js/jquery.ztree.excheck.js" %}'></script>
+<script type="text/javascript" src='{% static "zTree_v3/js/jquery.ztree.exedit.js" %}'></script>
+
+<script src="{% static 'js/bootstrapValidator.js' %}"></script>
+
+
+<!--Custom Scripts-->
+<script src="{% static 'js/common.js' %}"></script>
+<script src="{% static 'js/apiCase.js' %}"></script>
+<!--<script src="{% static 'js/automagic.js' %}"></script>-->
+
+
+<!--public js-->
+<script type="text/javascript" src="{% static 'js/back-to-top.js' %}"></script>
+<!--[if lt IE 9]>
+        <script src="{% static 'js/html5shiv/html5shiv.min.js' %}"></script>
+        <script src="{% static 'js/respondjs/respond.min.js' %}"></script>
+       <![endif]-->
+
+{#<script src="{% static 'js/xun.js' %}"></script>#}
+<script src="{% static 'js/jquery.wheelmenu.js' %}"></script>
+<script src="{% static 'muti_select/src/MultiSelectDropList.js' %}"></script>
+<link href="{% static 'muti_select/css/multi.css' %}" rel="stylesheet" type="text/css"/>
+
+<script type="text/javascript">
+    $(".leftsidebar_box dt").css({"background-color": "#fafafa"});
+    $(".leftsidebar_box dt img").attr("src", "{% static 'images/select_xl01.png' %}");
+    $(function () {
+        $(".leftsidebar_box dd").hide();
+        $(".leftsidebar_box dt").click(function () {
+            $(".leftsidebar_box dt").css({"background-color": "#fafafa"})
+            $(this).css({"background-color": "#fafafa", "margin-bottom": "1px"});
+            $(this).parent().find('dd').removeClass("menu_chioce");
+            $(".leftsidebar_box dt img").attr("src", "{% static 'images/select_xl01.png' %}");
+            $(this).parent().find('img').attr("src", "{% static 'images/select_xl.png' %}");
+            $(".menu_chioce").slideUp('fast');
+            $(this).parent().find('dd').slideToggle('fast');
+            $(this).parent().find('dd').addClass("menu_chioce");
+        });
+    })
+</script>
+
+
+<script>
+    function dataSearch(){
+        var oTable = $("#apicasetable").dataTable();
+        oTable.fnDraw();
+    }
+
+    function runAPICASE(id,author){
+
+        $("#apicase_id").val(id);
+        $("#apicase_author").val(author);
+        console.log($("#apicase_id").val());
+        console.log($("#apicase_author").val());
+           $.ajax({
+            type: "GET",
+            data: {},
+            url: "/api/webinterface/env/listall",
+            cache: false,
+            dataType: 'json',
+            async: false,
+            success: function (result, TextStatus) {
+                result=result.results;
+                //元素管理元素添加项目选择
+                var envItem=$("#apiEnv");
+                envItem.empty();
+                envItem.append('<option value="">选择运行环境</option>')
+                if (result.length > 0) {
+                    for (i = 0; i < result.length; i++) {
+                        envItem.append('<option value="' + result[i].env_name + '">' + result[i].env_name + '</option>');
+                    }
+                }
+             }
+         });
+   }
+
+   function allPick(){
+       
+       $("#apicasetable").find(".pickToRun").each(function(){
+           $(this).trigger("click");
+          
+       })    
+  }
+
+  function batchRun(){
+      let id="";
+      let arrChk=$("input[class='pickToRun']:checked");
+      arrChk.each(function(){
+          //if($(this).attr("checked")){
+              id+=$(this).parent().parent().next().text()+",";
+         // }
+      }) 
+      id=id.substring(0,id.length-1)
+      /*
+      $('#apicasetable').find(".pickToRun").each(function(){
+          //if($(this).attr("checked")){
+              id+=$(this).parent().parent().next().text()+",";
+         // }
+      })
+      */
+      if(id==""){
+          toastr.error("未选中case，请重新选择！！！");
+          return false;
+      }
+      runAPICASE(id,"wanghao");
+  }
+
+
+
+
+    function goApiCASE(){
+        apicase_id=$("#apicase_id").val();
+        apicase_env=$("#apiEnv").val();
+        author=$("#apicase_author").val();
+        if(apicase_env == "运行环境"){
+            return false;
+        }
+        $("#modal_cancel").trigger("click");
+        window.open('/apicaserun/?id='+apicase_id+'&env_name='+apicase_env+"&author="+author,'_blank');
+        
+
+    }
+
+    function delAPI(id){
+
+        var data={};
+        if(!confirm('确认删除这个CASE吗?')){
+            return false;
+        }
+        
+       
+        data.index=id;
+        //data=JSON.stringify(data);
+       // console.log(data);
+
+        $.ajax({
+            type: "POST",
+            data: data,
+            url: "/api/webinterface/case/delete",
+            cache: false,
+            dataType: 'json',
+            async: false,
+            success: function (result, TextStatus) {
+                if(result.success){
+            	    toastr.success(result.msg);
+            	}else{
+            	    toastr.error(result.msg);
+            	}
+
+
+            },function(msg) {
+				toastr.error("删除case失败:"+result.msg);
+			}
+		})
+	}
+
+
+     $("#selapiproductid").bind("change", function () {
+        var s1SelectedVal = $('#selapiproductid').val();
+        $.ajax({
+            type: "GET",
+            data: {'projectid': s1SelectedVal},
+            url: "/setting/get/module/", //后台处理函数的url 这里用的是static url 需要与urls.py中的name一致
+            cache: false,
+            dataType: 'json',
+            async: false,
+            success: function (result, TextStatus) {
+                //元素管理元素添加项目选择
+                var projectItem=$("#selapimoduleid")
+                projectItem.empty();
+                projectItem.append('<option value="">所属模块</option>')
+                if (result.length > 0) {
+                    for (i = 0; i < result.length; i++) {
+                        projectItem.append('<option value="' + result[i].key + '">' + result[i].value + '</option>');
+                    }
+                }
+        }
+    })})
+</script>
+
+</html>

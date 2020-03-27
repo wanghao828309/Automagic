@@ -1,0 +1,432 @@
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <title>Automagic</title>
+    <!--public css-->
+    <link href="{% static 'css/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/ak-base-style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/jquery.dataTables.min.css' %}" rel="stylesheet" type="text/css">
+     <link href="{% static 'css/api.css' %}" rel="stylesheet" type="text/css">
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css">-->
+    <!--<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" type="text/css">-->
+    <!--master page v3 css-->
+    <link href="{% static 'css/master-page-v3/ak-master-page-v3style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/master-page-v3/ak-master-page-v3.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/bootstrapValidator.css' %}" rel="stylesheet" type="text/css">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
+    <!--customer css-->
+    {#         <link href="{% static 'css/master-page-v3/ak-nav-chat.css' %}" rel="stylesheet" type="text/css">#}
+    <link href="{% static 'css/ak-schedule.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/wheelmenu.css' %}"/>
+
+    <style>
+    .leftsidebar_box dd a:hover,.leftsidebar_box dd.first_dd a{background-color:#d8d8d8;}
+    </style>
+</head>
+<body>
+
+ <div class="input-group">
+      <input type="input" class="env-input" id="env_name"   placeholder="环境名称" >
+      <input type="input" class="env-input" id="env_desc"    placeholder="环境描述" >
+      <a href="javascript:void(0);" class=" env-btn ak-right ac-btn-adduser blue env-btn" onclick="addEnv()" style="margin-left: 10px;padding-top: 6px;padding-bottom: 8px;">添加环境</a>
+ </div>
+
+<div class="panel-group" id="accordion">
+	<!-- <div class="panel panel-default">
+		<input class="hidden-envid" hidden="true" type="text" value="2">
+        <input type="text" class="host-input input-readonly" value="effectstore.121"   onblur="updateEnv(this)" readonly="readonly" >
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a  class="btn-expandhost " data-toggle="collapse" data-parent="#accordion"
+				   href="#collapseOne">+</a>
+			</h4>
+		</div>
+		<div id="collapseOne" class="panel-collapse collapse in">
+            <span>
+               <button class="btn btn-primary btn-addhost" >添加</button>
+                </span>
+			<div class="panel-body">
+				<div class="panel-subs">
+                 <input class="hidden-id" hidden="true" type="text" value="2">
+				 <input type="text" class="host-detail-input input-readonly" value="effectstore.wondershare.com" readonly="readonly">
+                 <input type="text" class="host-detail-input input-readonly" value="10.10.10.121" readonly="readonly">
+                 <button class="button danger tiny host-detail-input"  type="button" style="width:25px;">X</button>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+</div>
+
+
+</body>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/toastr.min.js' %}"></script>
+
+<!--<link rel="stylesheet" href='{% static "zTree_v3/css/zTreeStyle/zTreeStyle.css" %}' type="text/css">-->
+{#        <script type="text/javascript" src='{% static "zTree_v3/js/jquery-1.4.4.min.js" %}'></script>#}
+<script type="text/javascript" src='{% static "zTree_v3/js/jquery.ztree.core.js" %}'></script>
+<script type="text/javascript" src='{% static "zTree_v3/js/jquery.ztree.excheck.js" %}'></script>
+<script type="text/javascript" src='{% static "zTree_v3/js/jquery.ztree.exedit.js" %}'></script>
+
+<script src="{% static 'js/bootstrapValidator.js' %}"></script>
+
+
+<!--Custom Scripts-->
+<script src="{% static 'js/common.js' %}"></script>
+<!--<script src="{% static 'js/automagic.js' %}"></script>-->
+
+
+<!--public js-->
+<script type="text/javascript" src="{% static 'js/back-to-top.js' %}"></script>
+<!--[if lt IE 9]>
+        <script src="{% static 'js/html5shiv/html5shiv.min.js' %}"></script>
+        <script src="{% static 'js/respondjs/respond.min.js' %}"></script>
+       <![endif]-->
+
+{#<script src="{% static 'js/xun.js' %}"></script>#}
+<script src="{% static 'js/jquery.wheelmenu.js' %}"></script>
+<script src="{% static 'muti_select/src/MultiSelectDropList.js' %}"></script>
+<link href="{% static 'muti_select/css/multi.css' %}" rel="stylesheet" type="text/css"/>
+
+<script type="text/javascript">
+    $(".leftsidebar_box dt").css({"background-color": "#fafafa"});
+    $(".leftsidebar_box dt img").attr("src", "{% static 'images/select_xl01.png' %}");
+    $(function () {
+        $(".leftsidebar_box dd").hide();
+        $(".leftsidebar_box dt").click(function () {
+            $(".leftsidebar_box dt").css({"background-color": "#fafafa"})
+            $(this).css({"background-color": "#fafafa", "margin-bottom": "1px"});
+            $(this).parent().find('dd').removeClass("menu_chioce");
+            $(".leftsidebar_box dt img").attr("src", "{% static 'images/select_xl01.png' %}");
+            $(this).parent().find('img').attr("src", "{% static 'images/select_xl.png' %}");
+            $(".menu_chioce").slideUp('fast');
+            $(this).parent().find('dd').slideToggle('fast');
+            $(this).parent().find('dd').addClass("menu_chioce");
+        });
+    })
+</script>
+<script>
+function addEnv(){
+	//增加环境,然后刷新
+	var data={};
+	var env_name=$("#env_name").val();
+	var env_desc=$("#env_desc").val();
+	data.env_name=env_name;
+	data.simple_desc=env_desc;
+	data.update_author="wanghao";
+	data.create_author="wanghao";
+	  $.ajax({
+            type: "POST",
+            data: data,
+            url: "/api/webinterface/env/add",
+            cache: false,
+            dataType: 'json',
+            async: false,
+            success: function (result, TextStatus) {
+                if(result.success){
+            	    toastr.success(result.msg);
+            	    $("#env_name").val("");
+                  $("#env_desc").val("");
+                  window.location.reload()
+            	}else{
+            	    toastr.error(result.msg);
+            	    $("#env_name").val("");
+            	    $("#env_desc").val("");
+            	}
+            },function(msg) {
+				toastr.error("新增环境:"+result.msg);
+			}
+		})
+}
+
+
+function loadEnvPage(){
+	$.ajax({
+            type: "GET",
+            data: {},
+            url: "/api/webinterface/host/listAll",
+            cache: false,
+            dataType: 'json',
+            async: false,
+            success: function (result, TextStatus) {
+				for (var i=0;i<result.length;i++){
+					var envHtml='<div class="panel panel-default host-manager">\
+						   <input class="hidden-envid" hidden="true" type="text" value="'+String(result[i].env_id)+'">\
+        				   <input type="text" class="host-input input-readonly" value="'+String(result[i].env_name)+'"  readonly="">\
+						   <div class="panel-heading">\
+						   <h4 class="panel-title">\
+                   <a class="btn-expandhost" data-toggle="collapse" data-parent="#accordion" href="#'+String("collapse"+result[i].env_id)+'" aria-expanded="true">-</a>\
+                   <button class="delete-env button danger glyphicon glyphicon-trash"></button>\
+			               </h4>\
+		                </div>\
+		        <div id="'+String("collapse"+result[i].env_id)+'" class="panel-collapse collapse in" aria-expanded="true" style="">\
+                     <span>\
+                       <button class="btn btn-primary btn-addhost">添加</button>\
+                    </span>\
+			     <div class="panel-body">';
+					
+				   for (var j=0;j<result[i].env_detail.length;j++){
+					 envHtml=envHtml+'<div class="clear" >\
+                 				</div>\
+				 				<div class="panel-subs host-manager">\
+                 				<input class="hidden-id" hidden="true" type="text" value="'+String(result[i].env_detail[j].host_id)+'">\
+				 				<input type="text" class="host-detail-input input-readonly" value="'+String(result[i].env_detail[j].url)+'" readonly="readonly">\
+                 				<input type="text" class="host-detail-input input-readonly" value="'+String(result[i].env_detail[j].host)+'" readonly="readonly">\
+                 				<a title="删除" class="tiny glyphicon glyphicon-trash" href="javascript:void(0);"></a>\
+						</div>'
+					}	
+				  envHtml=envHtml+'</div></div></div>';
+				  $("#accordion").append(envHtml);		
+
+				}		
+            },function(msg) {
+				toastr.error("获取环境信息失败:"+result.msg);
+			}
+    })
+}
+
+
+
+
+$(document).ready(function (){
+	loadEnvPage();
+
+	 $("body").on('click' , '.btn-expandhost' , function() {
+    	if($(this).text() == "+" ){
+    		$(this).text("-");
+    	}else{
+    		$(this).text("+");
+    	}
+	})
+	 $("body").on('click' , '.host-input' , function() {
+    	$(this).prop("readonly",false);
+        $(this).removeClass("input-readonly");
+	})
+
+	$("body").on('focus' , '.host-input' , function() {
+		$(this).data("oldVal",$(this).val());
+	})
+
+	  $("body").on('blur' , '.host-input' , function() {
+    	$(this).prop("readonly",true);
+        $(this).addClass("input-readonly");
+		var oldVal=$(this).data("oldVal");
+		if(oldVal == $(this).val()){
+			//没有修改，不用给后端发请求
+			return false;
+		}
+		var data={};
+		data.env_id=$(this).parent().children(".hidden-envid").val();
+		if(!(typeof(data.env_id) == undefined | data.env_id == "")){
+			data.env_name=$(this).val();
+			$.ajax({
+            type: "POST",
+            data: data,
+            url: "/api/webinterface/env/update",
+            cache: false,
+            dataType: 'json',
+            async: false,
+            success: function (result, TextStatus) {
+                if(result.success){
+            	    toastr.success(result.msg);            	  
+            	}else{
+            	    toastr.error(result.msg);            	  
+            	}
+            },function(msg) {
+				toastr.error("更新环境:"+result.msg);
+			}
+		})
+		}
+		
+	})
+
+  $("body").on('click','.delete-env',function(){
+    var data = {}
+    data.env_id=$(this).parent().parent().parent().children(".hidden-envid").val();
+    console.log(data.env_id);
+    if(! confirm("确定删除这条host吗?")){
+				return false;
+      }
+      $.ajax({
+        type: "POST",
+        data: data,
+        url: "/api/webinterface/env/delete",
+        cache: false,
+        dataType: 'json',
+        async: false,
+        success: function (result, TextStatus) {
+          if(result.success){
+            toastr.success(result.msg);
+            window.location.reload();
+          }else{
+            toastr.error(result.msg);            	  
+          }
+        },function(msg) {
+          toastr.error("更新环境:"+result.msg);
+        }
+      })
+  })
+
+	 $("body").on('click' , '.host-detail-input' , function() {
+    	$(this).prop("readonly",false);
+        $(this).removeClass("input-readonly");
+	})
+
+	$("body").on('focus' , '.host-detail-input' , function() {
+		$(this).data("oldVal",$(this).val());
+	})
+
+
+	  $("body").on('blur' , '.host-detail-input' , function() {
+    	$(this).prop("readonly",true);
+        $(this).addClass("input-readonly");
+
+		var oldVal=$(this).data("oldVal");
+		if(oldVal == $(this).val()){
+			//没有修改，不用给后端发请求
+			return false;
+		}
+
+		var host_id=$(this).parent().children(".hidden-id").val();
+		var env_id=$(this).parent().parent().parent().parent().children(".hidden-envid").val();
+		var url=$.trim($(this).parent().children(".host-detail-input").first().val());
+		var host=$.trim($(this).parent().children(".host-detail-input").eq(1).val());
+		
+		if ((typeof(host_id) == "undefined" | host_id == "") & !(url == "" | host == "")){
+    		//新增
+			var data={};
+			data.base_url=url;
+			data.host=host;
+			data.env_id=env_id;
+			$.ajax({
+            type: "POST",
+            data: data,
+            url: "/api/webinterface/host/add",
+            cache: false,
+            dataType: 'json',
+            async: false,
+            success: function (result, TextStatus) {
+                if(result.success){					
+					$(this).parent().children(".hidden-id").val(result.id);
+            	}else{
+            	    toastr.error("新增host:"+result.msg); 
+					window.location.reload();   
+            	}
+            },function(msg) {
+				toastr.error("新增host:"+result.msg);
+				window.location.reload();
+			}
+		})
+
+		}else if(!(url == "" | host == "") & !($(this).parent().children(".hidden-id").val() == "")){
+			//更新
+			var data={};
+			data.base_url=url;
+			data.host=host;
+			data.hostid=host_id;
+			$.ajax({
+            type: "POST",
+            data: data,
+            url: "/api/webinterface/host/update",
+            cache: false,
+            dataType: 'json',
+            async: false,
+            success: function (result, TextStatus) {
+                if(result.success){					
+					
+            	}else{
+            	    toastr.error("更新host:"+result.msg);
+					window.location.reload();   	   
+            	}
+            },function(msg) {
+				toastr.error("更新host:"+result.msg);
+				window.location.reload();
+			}
+			})
+		}
+
+	})
+
+
+
+	  $("body").on('mouseenter' , '.panel-heading' , function() {
+    	var delBtn=$(this).children().children(".tiny");
+    	delBtn.show();
+	})
+
+	 $("body").on('mouseleave' , '.panel-heading' , function() {
+    	var delBtn=$(this).children().children(".tiny");
+    	delBtn.hide();
+	})
+
+
+	 $("body").on('click' , '.tiny' , function() {
+    	var isDelHost=$(this).parent().children(".hidden-id").val();
+    	if (typeof(isDelHost) == "undefined" | isDelHost == ""){
+    		$(this).parent().remove();
+    	}else{
+    		//发送删除请求然后才删除元素，同时弹出通知.
+			if(! confirm("确定删除这条host吗?")){
+				return false;
+      }
+			var data={};
+			data.id=isDelHost;
+			
+			$.ajax({
+            type: "POST",
+            data: data,
+            url: "/api/webinterface/host/delete",
+            cache: false,
+            dataType: 'json',
+            async: false,
+            success: function (result, TextStatus) {
+                if(result.success){
+					$(this).parent().remove();
+            	    toastr.success(result.msg);
+					
+            	}else{
+            	    toastr.error("删除host:"+result.msg);   	   
+            	}
+            },function(msg) {
+				toastr.error("删除host:"+result.msg);
+			}
+		})
+
+		}
+		window.location.reload(); //删除成功与否，都刷新页面
+	})
+
+
+	$("body").on('click' , '.btn-addhost' , function() {
+		var html='<div class="clear" >\
+                 </div>\
+    			<div class="panel-subs">\
+    			 <input class="hidden-id" hidden="true" type="text" value="">\
+				 <input type="text" class="host-detail-input input-readonly" value="" readonly="readonly">\
+                 <input type="text" class="host-detail-input input-readonly" value="" readonly="readonly">\
+                 <button class="button danger tiny host-detail-close"  type="button" ">X</button>\
+                 </div>';
+
+    	$(this).parent().parent().children('.panel-body').append(html);
+	})
+})
+
+  
+
+
+
+</script>
+
+</html>

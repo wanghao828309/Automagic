@@ -1,0 +1,67 @@
+{% extends 'frame.html' %}
+{% block title %}Automagic{% endblock %}
+{% block leftshow %}
+        <dl class="functiontest" id="menu">
+                <dt>功能测试<img src=""></dt>
+                <dd ><a href="{% url 'caselist' %}">用例管理</a></dd>
+                <dd ><a href="{% url 'tasklist' %}" >任务管理</a></dd>
+                <dd ><a href="{% url 'elementlist' %}" >元素管理</a></dd>
+                <dd class="first_dd"><a href="{% url 'keywordlist' %}">关键字管理</a></dd>
+            </dl>
+{% endblock %}
+{% block slideshow %}
+        <div class="ak-zper-midbox ak-jsch-mid">
+            <div class="ak-zper-inbox-title ak-jsch-title clearfix">
+                <div class="ak-left ak-jsch-row3 ak-zper-fix-btnbox">
+                    <span class="ak-zper-remindback"></span>
+                    <span class="inbox-text">关键字管理</span>
+                </div>
+                <div id="log_info" class="ac-addtips"></div>
+                <select id="selproductid2" name="productname" class="ak-right ak-left ac-aselect ac-margint8">
+                      <option value="">请选择</option>
+                      <option value="0">通用</option>
+                          {% for product in userandproduct  %}
+                              {% if product.username == request.user %}
+                                  <option value="{{ product.productname.id }}" {% if request.GET.productname  == product.productname %}selected{% endif %}>{{ product.productname }}</option>
+                              {% endif %}
+                          {% endfor %}
+                </select>
+            </div>
+
+            <!--      ---------------------华丽的分割线 main------------------------ -->
+               <iframe id='right_content' src="{% url 'keywordframe' %}" width="100%"  allowtransparency="true" height="900px">
+        </iframe>
+            <!--      ---------------------华丽的分割线 main end------------------------ -->
+
+        </div>
+
+{% endblock %}
+{% block script %}
+    {% load staticfiles %}
+    <script>
+        function btn_skip_click() {
+            var currpage = $('#curpage').val() === '' ? 1 : parseInt($('#curpage').val());
+            // console.log(currpage);
+            if (currpage > {{ page_obj.paginator.num_pages }}) {
+                currpage = {{ page_obj.paginator.num_pages }};
+            }
+            if (currpage < 1) {
+                currpage = 1;
+            }
+            var url = window.location.search.match(/page=(\d+|\s*)/) === null ? window.location.origin + (window.location.pathname + '?page=' + currpage + (window.location.search ? window.location.search.replace('?', '&') : '')) : window.location.search.replace(/page=(\d+|\s*)/, 'page=' + currpage);
+            self.location = url;
+
+            return false;
+        }
+
+        $('#curpage').keypress(function (event) {
+            console.log(event.which);
+            if (event.which == 13) {
+                btn_skip_click()
+            }
+            event.stopPropagation();
+        })
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'frame.html' %}
+{% block title %}Automagic{% endblock %}
+{% block leftshowinterface %}
+<dl class="interfacetest" id="apiTestMenu">
+    <dt>接口测试<img src=""></dt>
+    <dd><a href="{% url 'api:debugtalklist' %}">自定义方法</a></dd>
+    <dd><a href="{% url 'apilist' %}">接口管理</a></dd>
+    <dd><a href="{% url 'apicaselist' %}">用例管理</a></dd>
+    <dd><a href="{% url 'apisuitelist' %}">SUITE管理</a></dd>
+    <dd class="first_dd"><a href="{% url 'hostlist' %}">HOST管理</a></dd>
+</dl>
+{% endblock %}
+{% block slideshow %}
+<div class="ak-zper-midbox ak-jsch-mid">
+    <div class="ak-zper-inbox-title ak-jsch-title clearfix">
+        <div class="ak-left ak-jsch-row3 ak-zper-fix-btnbox">
+            <span class="ak-zper-remindback"></span>
+            <span class="inbox-text">HOST管理</span>
+        </div>
+    </div>
+
+    <!--      ---------------------华丽的分割线 main------------------------ -->
+    <iframe id='right_content' src="{% url 'hostframe' %}" width="100%" allowtransparency="true" height="900px">
+    </iframe>
+    <!--      ---------------------华丽的分割线 main end------------------------ -->
+
+</div>
+
+
+{% endblock %}

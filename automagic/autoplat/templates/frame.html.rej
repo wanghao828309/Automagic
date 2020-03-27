@@ -1,0 +1,83 @@
+diff a/automagic/autoplat/templates/frame.html b/automagic/autoplat/templates/frame.html	(rejected hunks)
+@@ -68,47 +68,49 @@
+         {#            <a class=" " href="http://172.17.3.60/" target="_blank">Git Server</a>#}
+         {#        </li>#}
+ 
+-
++        <li class="top-clock">
++            <span class="ak-zmaster-paage2-logo"><img src="{% static 'images/logo-automagic.png' %}"
++                                                      class="img-responsive"></span>
++        </li>
+         <li class="container-fluid pull-right">
+             <ul class=" bar-right right-menu">
+ 
+-                   <li class=" dropdown notifications ak-zuser-dropdowndiv" data-href="view-userinfo">
+-                    <a class="user-bar-single" href="javascript:;" class="" data-toggle="dropdown"
+-                       aria-expanded="true" style="background-color: transparent;"> <img src="{% static 'images/user-13.jpg' %}" class="ak-zuser-aimg" alt="">
+-                        <!--<span>{{ request.user.realname }}</span>-->
++                </li>
++                {#                <li class="members-btn max-block" data-href="notice-sidebar"  data-close=".close-notice-sidebar">#}
++                {#                    <a class="show-notice"><i class="fa fa-bell-o"></i> <span class="label label-warning">4</span></a>#}
++                {#              </li>#}
++
++                <!---->
++                <li class=" dropdown notifications ak-zuser-dropdowndiv" data-href="view-userinfo">
++                    <a href="javascript:;" class="" data-toggle="dropdown"
++                       aria-expanded="true"> <img src="{% static 'images/user-13.jpg' %}" class="ak-zuser-aimg" alt="">
++                        <span>{{ request.user.realname }}</span>
+                     </a>
+ 
+-                    <!--<div class="dropdown-menu animated fadeInDown ak-admin-con ak-user-dropdown-menu ak-zadmin-dropmenu"-->
+-                         <!--id="view-userinfo">-->
+-                        <!--<div class="topbox">-->
+-                            <!--&lt;!&ndash;<span class="img-box"><img src="{% static 'images/user-13.jpg' %}" class="img-responsive"></span>&ndash;&gt;-->
+-                            <!--<h4 class="name">{{ request.user.realname }}</h4>-->
+-                            <!--<p class="email">{{ request.user.email }}</p>-->
+-                            <!--{% if request.user.mobile %}-->
+-                                <!--<p class="email">{{ request.user.mobile }}</p>-->
+-                            <!--{% endif %}-->
+-                            <!--{#                                  <button class="ak-zadmin-infobtn">查看信息</button>#}-->
+-                        <!--</div>-->
+-                        <!--<div class="footbox clearfix">-->
+-                            <!--<button class="ak-zadmin-bottombtn"><a href="/logout">切换用户</a></button>-->
+-                            <!--{#                                  <button class="ak-zadmin-bottombtn pull-right">退出</button>#}-->
+-                        <!--</div>-->
+-                    <!--</div>-->
+-                        <div class="user-info-bar">
+-                        <div class="user-base-info">
+-                            <span class="header-ui-item">{{ request.user.realname }}</span>
+-                            <span class="header-ui-item">{{ request.user.email }}</span>
++                    <div class="dropdown-menu animated fadeInDown ak-admin-con ak-user-dropdown-menu ak-zadmin-dropmenu"
++                         id="view-userinfo">
++                        <div class="topbox"><span class="img-box"><img src="{% static 'images/user-13.jpg' %}"
++                                                                       class="img-responsive"></span>
++                            <h4 class="name">{{ request.user.realname }}</h4>
++                            <p class="email">{{ request.user.email }}</p>
+                             {% if request.user.mobile %}
+-                            <span class="header-ui-item">{{ request.user.mobile }}</span>
+-                             {% endif %}
+-                            <a class="header-ui-item" href="/logout" rel="nofollow">
+-                                退出登录
+-                         </a>
++                                <p class="email">{{ request.user.mobile }}</p>
++                            {% endif %}
++                            {#                                  <button class="ak-zadmin-infobtn">查看信息</button>#}
+                         </div>
++                        <div class="footbox clearfix">
++                            <button class="ak-zadmin-bottombtn"><a href="/logout">切换用户</a></button>
++                            {#                                  <button class="ak-zadmin-bottombtn pull-right">退出</button>#}
+                         </div>
+-                </div>
++                    </div>
+                 </li>
+-             </ul>
++                <!---->
++                {#                <li class="members-btn max-none" data-href="setting-sidebar" data-close=".close-notice-sidebar">#}
++                {#                    <a class="show-notice">#}
++                {#                        <img src="{% static 'images/setting-top02.png' %}" style="display:inline-block;">#}
++                {#                    </a>#}
++                {#                </li>#}
++            </ul>
+         </li>
+     </ul>
+     </li>

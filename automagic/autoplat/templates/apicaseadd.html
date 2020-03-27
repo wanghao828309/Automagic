@@ -1,0 +1,319 @@
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>添加case</title>	
+    
+    <link href="{% static 'css/transfer-bootstrap.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/transfer.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/toastr.min.js' %}"></script>
+    <script src="{% static 'js/jquery.transfer.js' %}"></script>    
+    <script src="{% static 'js/SortableJS.js' %}"></script>
+    <script src="{% static 'js/jquery-sortable.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/ApiCaseCommon.js' %}"></script>
+    
+  
+  </head>
+
+  <body>
+
+	
+    <div style="margin-left: 80px;margin-top: 20px;">
+                <select id="api-selproductid" name="productname" class="select" style="width: auto;height: auto;">
+                  <option value="0">所属产品</option>
+                </select>
+                <select id="selapiproductid" name="productname" class="select" style="width: auto;height: auto;">
+                    <option value="">所属项目</option>
+                    <!-- <option value="">filmstocks</option>
+                    <option value="">effects</option>
+                    <option value="">good service</option>
+                    <option value="">user 服务</option> -->
+                 </select>
+                 <select id="selapimoduleid" name="moduleid" class="select" style="width: auto;height: auto;">
+                     <option value="">所属模块</option>
+                     <!-- <option value="">订单模块</option>
+                     <option value="">登录模块</option>
+                     <option value="">权益模块</option>
+                     <option value="">查询接口</option> -->
+                </select>
+    </div>   
+    <div style="clear:both">
+            <input type="text" id="case_name" class="input-inner transfer-input-name" placeholder="case名称">
+            <button id="case_save" class="btn btn-sm btn-primary transfer-btn-save">保存</button> 
+    </div>
+
+  
+
+    <table id="params_table" class="table table-bordered transfer-table">
+            <thead>
+                <tr>
+                    <th width="43%">参数名称</th>
+                    <!-- <th width="10%">Body参数类型</th> -->
+                    <th>参数值</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr class="params_p" cnt="1">
+                        <td>
+                            <input class="p_name transfer-table-td-input" type="text" name="p_name_1" title="参数名称" alt="参数名称" value="" maxlength="100">
+                        </td>
+                     
+                        <td>
+                            <input class="p_value transfer-table-td-input" type="text" name="p_value_1" title="参数数值" alt="参数数值" value="" maxlength="5000">									
+                            <button class="button danger tiny else-btn" onclick="javascript:del_param(this);" type="button" style="display:none;">删除参数</button>
+                        </td>
+                    </tr>
+                
+
+            </tbody>
+        </table>
+        <div id="controlltable">
+                <button class="btn btn-sm btn-primary transfer-btn-save" id="add_url_parameter" type="button" onclick="add_param()" style="margin-left: 80;">添加参数</button>
+                <!--<button class="button success small" id="add_raw_url_parameter" type="button">RAW批量添加</button>-->
+        </div>
+
+        <h5 class="page-header"></h5>
+
+        <div style="margin-left: 80px;margin-top: 20px;">
+                <select id="apicaseproductid" name="productname" class="select" style="width: auto;height: auto;">
+                    <option value="">所属项目</option>
+                    <!-- <option value="">filmstocks</option>
+                    <option value="">effects</option>
+                    <option value="">good service</option>
+                    <option value="">user 服务</option> -->
+                 </select>
+                 <select id="apicasemoduleid" name="moduleid" class="select" style="width: auto;height: auto;">
+                     <option value="">所属模块</option>
+                     <!-- <option value="">订单模块</option>
+                     <option value="">登录模块</option>
+                     <option value="">权益模块</option>
+                     <option value="">查询接口</option> -->
+                </select>
+                <input type="text" id="apisearchstr" class="input-inner " placeholder="输入名称/url查询" style="margin-left: 10;height: 30px;width: 430px;">
+                <button class="btn btn-sm btn-primary transfer-btn-save" id="getApis" style="margin-top: -10;" onclick="serachAPI()">查询接口</button>
+               
+        </div>
+        
+    <div id="test">
+        <select id="source" multiple="multiple">
+            <option value="1">filmstocks登录接口</option>
+            <!-- <option value="2" >获取订阅权益</option>
+            <option value="3" >购买saas资源</option>
+            <option value="4" >收藏saas资源</option>
+            <option value="5" >下载saas资源</option>
+            <option value="6" >查询用户下载记录</option> -->
+        </select>
+        <select id="target" multiple="multiple">
+
+        </select>
+    </div>
+    
+    <div class="modal fade mid-modal " id="apicaseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
+            <div class="modal-dialog">
+                <div class="modal-content" style="min-height:500px;height: auto;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">接口参数</h4>
+                    </div>
+                    <ul id="myTab" class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#home" data-toggle="tab">
+                                     接口参数
+                                </a>
+                            </li>
+                            <li><a href="#ios" data-toggle="tab">case变量赋值</a></li>
+                            <li><a href="#jmeter" data-toggle="tab">接口断言</a></li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane fade in active" id="home">
+                                    <table id="sub_params_table" class="table table-bordered transfer-table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="43%">接口参数名称</th>
+                                                    <!-- <th width="10%">Body参数类型</th> -->
+                                                    <th>接口参数值</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr class="params_p" cnt="1">
+                                                        <td>
+                                                            <input class="p_name transfer-table-td-input" type="text" name="p_name_1" title="参数名称" alt="参数名称" value="" maxlength="100">
+                                                        </td>
+                                                     
+                                                        <td>
+                                                            <input class="p_value transfer-table-td-input" type="text" name="p_value_1" title="参数数值" alt="参数数值" value="" maxlength="5000">									
+                                                            <button class="button danger tiny else-btn" onclick="javascript:del_param(this);" type="button" style="display:none;">删除参数</button>
+                                                        </td>
+                                                    </tr>
+                                                
+                                
+                                            </tbody>
+                                        </table>
+                                        <div id="controlltable">
+                                                <button class="btn btn-primary " id="add_url_parameter" type="button" onclick="add_subparam()" style="margin-left: 80;">添加</button>
+                                                <!--<button class="button success small" id="add_raw_url_parameter" type="button">RAW批量添加</button>-->
+                                        </div>
+                            </div>
+                            <div class="tab-pane fade" id="ios">
+                                    <table id="sub_value_table" class="table table-bordered transfer-table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="43%">case参数名称</th>
+                                                     <th>等于</th>
+                                                    <th>参数取值</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr class="params_p" cnt="1">
+                                                        <td>
+                                                            <input class="p_name transfer-table-td-input" type="text" name="p_name_1" title="参数名称" alt="参数名称" value="" maxlength="100">
+                                                        </td>
+                                                        <td>
+                                                            <label>=</label>    
+                                                        </td>
+                                                        <td>
+                                                            <input class="p_value transfer-table-td-input" type="text" name="p_value_1" title="参数数值" alt="参数数值" value="" maxlength="5000">									
+                                                            <button class="button danger tiny else-btn" onclick="javascript:del_param(this);" type="button" style="display:none;">删除参数</button>
+                                                        </td>
+                                                    </tr>
+                                                
+                                
+                                            </tbody>
+                                        </table>
+                                        <div id="controlltable">
+                                                <button class="btn  btn-primary " id="add_url_parameter" type="button" onclick="add_sub_value()" style="margin-left: 80;">添加</button>
+                                                <!--<button class="button success small" id="add_raw_url_parameter" type="button">RAW批量添加</button>-->
+                                        </div>
+                            </div>
+                            <div class="tab-pane fade" id="jmeter">
+                                    <table id="sub_check_table" class="table table-bordered transfer-table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="30%">参数</th>
+                                                    <th width="15%">参数类型</th>
+                                                    <th width="20%">断言类型</th>
+                                                    <!-- <th width="10%">Body参数类型</th> -->
+                                                    <th>预期值</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr class="params_p" cnt="1">
+                                                        <td>
+                                                            <input class="p_name transfer-table-td-input" type="text" name="p_name_1" title="参数名称" alt="参数名称" value="" maxlength="100">
+                                                        </td>
+                                                        <td>
+                                                                <select class="itype" >\
+                                                                        <option value="string" selected="">string</option>\
+                                                                        <option value="int" >int</option>\
+                                                                        <option value="float">float</option>\
+                                                                        <option value="double">double</option>\
+                                                                        <option value="boolean">boolean</option>\
+                                                                    </select>
+                                                        </td>
+                                                        <td>
+                                                                <select class="checktor" >
+                                                                        <option value="equals">equals</option>
+                                                                        <option value="contains">contains</option>
+                                                                        <option value="startswith">startswith</option>
+                                                                        <option value="endswith">endswith</option>
+                                                                        <option value="regex_match">regex_match</option>
+                                                                        <option value="type_match">type_match</option>
+                                                                        <option value="contained_by">contained_by</option>
+                                                                        <option value="less_than">less_than</option>
+                                                                        <option value="less_than_or_equals">less_than_or_equals</option>
+                                                                        <option value="greater_than">greater_than</option>
+                                                                        <option value="greater_than_or_equals">greater_than_or_equals</option>
+                                                                        <option value="not_equals">not_equals</option>
+                                                                        <option value="string_equals">string_equals</option>
+                                                                        <option value="length_equals">length_equals</option>
+                                                                        <option value="length_greater_than">length_greater_than</option>
+                                                                        <option value="length_greater_than_or_equals">length_greater_than_or_equals</option>
+                                                                        <option value="length_less_than">length_less_than</option>
+                                                                        <option value="equals">length_less_than_or_equals</option>
+                                                                    </select>
+                                                            </td>
+                                                           
+                                                        <td>
+                                                            <input class="p_value transfer-table-td-input" type="text" name="p_value_1" title="参数数值" alt="参数数值" value="" maxlength="5000">									
+                                                            <button class="button danger tiny else-btn" onclick="javascript:del_param(this);" type="button" style="display:none;">删除参数</button>
+                                                        </td>
+                                                    </tr>
+                                                
+                                
+                                            </tbody>
+                                        </table>
+                                        <div id="controlltable">
+                                                <button class="btn  btn-primary " id="add_url_parameter" type="button" onclick="add_sub_check()" style="margin-left: 80;">添加</button>
+                                                <!--<button class="button success small" id="add_raw_url_parameter" type="button">RAW批量添加</button>-->
+                                        </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer diy-footer">
+                                <button type="button" id="modal_cancel" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" onclick="saveApicase()">保存</button>
+                        </div>
+                </div><!-- /.modal-content -->
+                
+    </div><!-- /.modal -->
+    </div>
+    <script src="{% static 'js/apiCase.js' %}"></script>
+    <script src="{% static 'js/js_beauty.js' %}"></script>
+
+    <script>
+		$(function() {
+            $('#test').transfer({
+                source:'#source',
+                target:'#target'
+            });
+		});
+    </script>
+    <script>        
+        $(document).ready(function (){
+            $('.transfer-panel-list').sortable();
+            $('.transfer-panel-list').sortable({
+	
+	            handle: '.handle',
+	            invertSwap: true,
+	
+            })
+        });
+    </script>
+    <script>
+  
+
+    $(document).ready(function (){
+     
+        //关闭model的时候，去掉block，不然会挡住操作
+        $('#apicaseModal').on('hidden.bs.modal', function (e) {           
+            $(this).attr("style","display:none");
+        })
+
+        serachAPI();//页面加载，默认所有接口都弄出来
+
+        $("#case_save").on("click",function(){            
+            validate();
+            saveApicaseToDb("new");
+
+        })
+
+        $('body').on('mouseenter' , 'tr' , function() {
+     	    var delBtn=$(this).children().children(".tiny");
+    	    delBtn.show();
+	    })
+
+	    $('body').on('mouseleave' , 'tr' , function() {
+    	    var delBtn=$(this).children().children(".tiny");
+    	    delBtn.hide();
+        })
+    })
+</script>
+</body>
+</html>
+
+
+
+

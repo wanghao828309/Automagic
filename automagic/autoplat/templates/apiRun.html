@@ -1,0 +1,54 @@
+{% load staticfiles %}
+<html>
+  <head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title></title>
+     <script src="{% static 'js/jquery.min.js' %}"></script>
+     <script src="{% static 'js/jquery.jsonview.min.js' %}"></script>
+     <link href="{% static 'css/jquery.jsonview.min.css' %}" rel="stylesheet" type="text/css">
+     <link href="{% static 'css/loading.css' %}" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div id="load_div" class="background_withloading"></div>
+    <div id="result" class="distance">
+    </div>
+  </body>
+  <script>
+  $(document).ready(function (){
+    var bg=$("#load_div");
+    bg.show();
+	function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+    }
+    var index=getUrlParam("id");
+    var author=getUrlParam("author");
+    var env_name=getUrlParam("env_name");
+    if(typeof(index) == "undefined" | typeof(author) == "undefined" |typeof(env_name) == "undefined"){
+        return false;
+    }
+
+
+    $.ajax({
+            type: "POST",
+            data: {"index":index,
+                       "author":author,
+                       "env_name":env_name
+                },
+            url: "/api/webinterface/api/run/",
+            cache: false,
+            dataType: "json",
+            async: false,
+            success: function (result, TextStatus) {
+                bg.hide();
+                $("#result").JSONView(result, { collapsed: false });
+
+        }
+    })
+
+
+})
+</script>
+</html>
